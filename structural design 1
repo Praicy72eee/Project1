@@ -1,0 +1,42 @@
+// Target interface (MP3 player)
+interface MP3Player {
+    void playMP3(String filename);
+}
+
+// Adaptee (VLC player)
+class VLCPlayer {
+    void playVLC(String filename) {
+        System.out.println("Playing VLC file: " + filename);
+    }
+}
+
+// Adapter (VLC to MP3 adapter)
+class VLCAdapter implements MP3Player {
+    private VLCPlayer vlcPlayer;
+
+    public VLCAdapter(VLCPlayer vlcPlayer) {
+        this.vlcPlayer = vlcPlayer;
+    }
+
+    @Override
+    public void playMP3(String filename) {
+        // Convert VLC file to MP3 file
+        String mp3Filename = convertVLCtoMP3(filename);
+        vlcPlayer.playVLC(mp3Filename);
+    }
+
+    private String convertVLCtoMP3(String filename) {
+        // Implementation to convert VLC file to MP3 file
+        return "converted_" + filename + ".mp3";
+    }
+}
+
+// Client code
+public class MusicPlayerApp {
+    public static void main(String[] args) {
+        VLCPlayer vlcPlayer = new VLCPlayer();
+        VLCAdapter adapter = new VLCAdapter(vlcPlayer);
+
+        adapter.playMP3("example.vlc"); // Play VLC file using MP3 player
+    }
+}
