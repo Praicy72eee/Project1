@@ -1,0 +1,80 @@
+// Abstraction (Shape)
+abstract class Shape {
+    protected Renderer renderer;
+
+    public Shape(Renderer renderer) {
+        this.renderer = renderer;
+    }
+
+    abstract void draw();
+}
+
+// Refined Abstraction (Circle)
+class Circle extends Shape {
+    public Circle(Renderer renderer) {
+        super(renderer);
+    }
+
+    @Override
+    void draw() {
+        renderer.drawCircle();
+    }
+}
+
+// Refined Abstraction (Rectangle)
+class Rectangle extends Shape {
+    public Rectangle(Renderer renderer) {
+        super(renderer);
+    }
+
+    @Override
+    void draw() {
+        renderer.drawRectangle();
+    }
+}
+
+// Implementation (Renderer)
+interface Renderer {
+    void drawCircle();
+    void drawRectangle();
+}
+
+// Concrete Implementation (Raster Renderer)
+class RasterRenderer implements Renderer {
+    @Override
+    public void drawCircle() {
+        System.out.println("Drawing circle using raster renderer");
+    }
+
+    @Override
+    public void drawRectangle() {
+        System.out.println("Drawing rectangle using raster renderer");
+    }
+}
+
+// Concrete Implementation (Vector Renderer)
+class VectorRenderer implements Renderer {
+    @Override
+    public void drawCircle() {
+        System.out.println("Drawing circle using vector renderer");
+    }
+
+    @Override
+    public void drawRectangle() {
+        System.out.println("Drawing rectangle using vector renderer");
+    }
+}
+
+// Client code
+public class DrawingApp {
+    public static void main(String[] args) {
+        Renderer rasterRenderer = new RasterRenderer();
+        Renderer vectorRenderer = new VectorRenderer();
+
+        Shape circle = new Circle(rasterRenderer);
+        circle.draw(); // Draw circle using raster renderer
+
+        Shape rectangle = new Rectangle(vectorRenderer);
+        rectangle.draw(); // Draw rectangle using vector renderer
+    }
+}
