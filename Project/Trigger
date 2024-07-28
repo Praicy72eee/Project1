@@ -1,0 +1,19 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Trigger {
+    private List<TriggerItem> triggerItems;
+
+    public Trigger() {
+        triggerItems = new ArrayList<>();
+    }
+
+    public void addTrigger(String condition, String operator, int value, String action) {
+        triggerItems.add(new TriggerItem(condition, operator, value, action));
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder trigger = new StringBuilder();
+        for (TriggerItem item : triggerItems) {
+            trigger.append(item.toString()).append
