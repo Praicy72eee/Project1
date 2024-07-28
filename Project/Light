@@ -1,0 +1,10 @@
+public class Light extends Device {
+    public Light(int id) {
+        super(id, "Light");
+    }
+
+    @Override
+    public String getStatus() {
+        return "Light " + getId() + " is " + super.getStatus();
+    }
+}
