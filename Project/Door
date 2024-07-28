@@ -1,0 +1,10 @@
+public class Door extends Device {
+    public Door(int id) {
+        super(id, "Door");
+    }
+
+    @Override
+    public String getStatus() {
+        return "Door is " + super.getStatus();
+    }
+}
