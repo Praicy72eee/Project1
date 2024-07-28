@@ -1,0 +1,62 @@
+// Strategy interface
+public interface PaymentStrategy {
+    void pay(double amount);
+}
+
+// Concrete strategy
+public class CreditCardStrategy implements PaymentStrategy {
+    private String cardNumber;
+    private String expirationDate;
+
+    public CreditCardStrategy(String cardNumber, String expirationDate) {
+        this.cardNumber = cardNumber;
+        this.expirationDate = expirationDate;
+    }
+
+    @Override
+    public void pay(double amount) {
+        System.out.println("Paid $" + amount + " using credit card " + cardNumber);
+    }
+}
+
+// Concrete strategy
+public class PayPalStrategy implements PaymentStrategy {
+    private String email;
+
+    public PayPalStrategy(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public void pay(double amount) {
+        System.out.println("Paid $" + amount + " using PayPal account " + email);
+    }
+}
+
+// Context
+public class PaymentGateway {
+    private PaymentStrategy paymentStrategy;
+
+    public PaymentGateway(PaymentStrategy paymentStrategy) {
+        this.paymentStrategy = paymentStrategy;
+    }
+
+    public void setPaymentStrategy(PaymentStrategy paymentStrategy) {
+        this.paymentStrategy = paymentStrategy;
+    }
+
+    public void pay(double amount) {
+        paymentStrategy.pay(amount);
+    }
+}
+
+// Usage
+public class Main {
+    public static void main(String[] args) {
+        PaymentGateway paymentGateway = new PaymentGateway(new CreditCardStrategy("1234-5678-9012-3456", "12/2025"));
+        paymentGateway.pay(100.0);
+
+        paymentGateway.setPaymentStrategy(new PayPalStrategy("example@example.com"));
+        paymentGateway.pay(200.0);
+    }
+}
