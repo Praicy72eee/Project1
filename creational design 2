@@ -1,0 +1,33 @@
+// PaymentGateway interface
+public interface PaymentGateway {
+    void processPayment(String amount);
+}
+
+// CreditCardPaymentGateway implementation
+public class CreditCardPaymentGateway implements PaymentGateway {
+    @Override
+    public void processPayment(String amount) {
+        System.out.println("Processing credit card payment of " + amount);
+    }
+}
+
+// PayPalPaymentGateway implementation
+public class PayPalPaymentGateway implements PaymentGateway {
+    @Override
+    public void processPayment(String amount) {
+        System.out.println("Processing PayPal payment of " + amount);
+    }
+}
+
+// PaymentGatewayFactory class
+public class PaymentGatewayFactory {
+    public static PaymentGateway createPaymentGateway(String type) {
+        if (type.equals("creditcard")) {
+            return new CreditCardPaymentGateway();
+        } else if (type.equals("paypal")) {
+            return new PayPalPaymentGateway();
+        } else {
+            throw new UnsupportedOperationException("Unsupported payment type");
+        }
+    }
+}
