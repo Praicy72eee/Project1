@@ -1,0 +1,69 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class SmartHomeSystem {
+    private List<Device> devices;
+    private Schedule schedule;
+    private Trigger trigger;
+
+    public SmartHomeSystem() {
+        devices = new ArrayList<>();
+        schedule = new Schedule();
+        trigger = new Trigger();
+    }
+
+    public void addDevice(Device device) {
+        devices.add(device);
+    }
+
+    public void removeDevice(Device device) {
+        devices.remove(device);
+    }
+
+    public void turnOn(int deviceId) {
+        Device device = getDevice(deviceId);
+        if (device != null) {
+            device.turnOn();
+        }
+    }
+
+    public void turnOff(int deviceId) {
+        Device device = getDevice(deviceId);
+        if (device != null) {
+            device.turnOff();
+        }
+    }
+
+    public void setSchedule(int deviceId, String time, String command) {
+        schedule.addSchedule(deviceId, time, command);
+    }
+
+    public void addTrigger(String condition, String operator, int value, String action) {
+        trigger.addTrigger(condition, operator, value, action);
+    }
+
+    public String getStatusReport() {
+        StringBuilder report = new StringBuilder();
+        for (Device device : devices) {
+            report.append(device.getStatus()).append(". ");
+        }
+        return report.toString();
+    }
+
+    public String getScheduledTasks() {
+        return schedule.toString();
+    }
+
+    public String getAutomatedTriggers() {
+        return trigger.toString();
+    }
+
+    private Device getDevice(int deviceId) {
+        for (Device device : devices) {
+            if (device.getId() == deviceId) {
+                return device;
+            }
+        }
+        return null;
+    }
+}
