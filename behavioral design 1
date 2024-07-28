@@ -1,0 +1,63 @@
+// Subject interface
+public interface WeatherSubject {
+    void registerObserver(WeatherObserver observer);
+    void removeObserver(WeatherObserver observer);
+    void notifyObservers();
+}
+
+// Concrete subject
+public class WeatherStation implements WeatherSubject {
+    private List<WeatherObserver> observers;
+    private double temperature;
+
+    public WeatherStation() {
+        observers = new ArrayList<>();
+    }
+
+    @Override
+    public void registerObserver(WeatherObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(WeatherObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (WeatherObserver observer : observers) {
+            observer.update(temperature);
+        }
+    }
+
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+        notifyObservers();
+    }
+}
+
+// Observer interface
+public interface WeatherObserver {
+    void update(double temperature);
+}
+
+// Concrete observer
+public class TemperatureDisplay implements WeatherObserver {
+    @Override
+    public void update(double temperature) {
+        System.out.println("Temperature: " + temperature);
+    }
+}
+
+// Usage
+public class Main {
+    public static void main(String[] args) {
+        WeatherStation weatherStation = new WeatherStation();
+        TemperatureDisplay temperatureDisplay = new TemperatureDisplay();
+
+        weatherStation.registerObserver(temperatureDisplay);
+        weatherStation.setTemperature(25.0);
+        weatherStation.setTemperature(30.0);
+    }
+}
