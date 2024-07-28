@@ -1,0 +1,40 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Schedule {
+    private List<ScheduleItem> scheduleItems;
+
+    public Schedule() {
+        scheduleItems = new ArrayList<>();
+    }
+
+    public void addSchedule(int deviceId, String time, String command) {
+        scheduleItems.add(new ScheduleItem(deviceId, time, command));
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder schedule = new StringBuilder();
+        for (ScheduleItem item : scheduleItems) {
+            schedule.append(item.toString()).append(". ");
+        }
+        return schedule.toString();
+    }
+}
+
+class ScheduleItem {
+    private int deviceId;
+    private String time;
+    private String command;
+
+    public ScheduleItem(int deviceId, String time, String command) {
+        this.deviceId = deviceId;
+        this.time = time;
+        this.command = command;
+    }
+
+    @Override
+    public String toString() {
+        return "Device " + deviceId + " at " + time + " will " + command;
+    }
+}
